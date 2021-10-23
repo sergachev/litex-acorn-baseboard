@@ -6,11 +6,12 @@ authors = ["Ilia Sergachev <ilia.sergachev@pm.me>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-migen = "^0.9.2"
+migen = "*"
 litex = {path = "litex", develop=true}
 litedram = {path = "litedram", develop=true}
 litepcie = {path = "litepcie", develop=true}
-pythondata-cpu-vexriscv = "^1.0.1"
+litex-boards = {path = "litex-boards", develop=true}
+pythondata-cpu-vexriscv = "*"
 
 [tool.poetry.dev-dependencies]
 
