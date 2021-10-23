@@ -1,11 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include <irq.h>
 #include <uart.h>
 #include <generated/csr.h>
 #include <i2c.h>
 #include "i2c_spi.h"
+
+
+#define PIN_SPI_SS 0
+#define PIN_PROG_EN 1
+
+#define SPI_CMD_READ_ID 0x9f
 
 
 int main(void)
@@ -16,41 +23,33 @@ int main(void)
 #endif
     uart_init();
 
-    uint8_t d;
-    bool ret = i2c_read(I2C_ADDR, GPIO_READ, &d, 1, true);
-    printf("%d %d\n", ret, d);
+    uint8_t buf[4] = {0};
 
-    d = 0b0010;
-    ret = i2c_write(I2C_ADDR, GPIO_ENABLE, &d, 1);
-    if (!ret)
-        printf("%d\n", ret);
+    // configure 'programming enable' pin of io expander as gpio output
+    buf[0] = 1 << PIN_PROG_EN;
+    assert(i2c_write(I2C_ADDR, GPIO_ENABLE, buf, 1));
 
-    d = 0b00000100;
-    ret = i2c_write(I2C_ADDR, GPIO_CONFIG, &d, 1);
-    if (!ret)
-        printf("%d\n", ret);
+    // set the pin as push-pull output
+    buf[0] = GPIO_MODE_PP << (PIN_PROG_EN * 2);
+    assert(i2c_write(I2C_ADDR, GPIO_CONFIG, buf, 1));
 
-    d = 0b0010;
-    ret = i2c_write(I2C_ADDR, GPIO_WRITE, &d, 1);
-    if (!ret)
-        printf("%d\n", ret);
+    // enable programming
+    buf[0] = 1 << PIN_PROG_EN;
+    assert(i2c_write(I2C_ADDR, GPIO_WRITE, buf, 1));
 
-    d = 0;
-    ret = i2c_write(I2C_ADDR, CONFIG_SPI, &d, 1);
-    if (!ret)
-        printf("%d\n", ret);
+    buf[0] = 0; // SPI mode: max clock rate, CPOL = 0, CPHA = 0, MSB first
+    assert(i2c_write(I2C_ADDR, CONFIG_SPI, buf, 1));
 
-    // read spi flash id
-    uint8_t data[] = {0x9f, 0, 0, 0};
-    ret = i2c_spi_write(1, data, sizeof(data));
-    if (!ret)
-        printf("%d\n", ret);
-    ret = i2c_spi_read(1, data, sizeof(data));
-    printf("%d %d %d %d %d\n", ret, data[0], data[1], data[2], data[3]);
+    buf[0] = SPI_CMD_READ_ID;
+    assert(i2c_spi_write((1 << PIN_SPI_SS), buf, 4));
+    assert(i2c_spi_read((1 << PIN_SPI_SS), buf, 4));
+    printf("SPI flash ID: %d %d %d %d\n", buf[0], buf[1], buf[2], buf[3]);
 
-    while(1) {
-        busy_wait_us(1000 * 1000);
-    }
+    // disable programming
+    buf[0] = 0;
+    assert(i2c_write(I2C_ADDR, GPIO_WRITE, buf, 1));
+
+    while(1) {}
 
     return 0;
 }

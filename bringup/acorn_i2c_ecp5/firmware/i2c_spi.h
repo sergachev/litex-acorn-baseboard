@@ -8,5 +8,7 @@
 #define GPIO_CONFIG 0xf7
 #define CONFIG_SPI 0xf0
 
+#define GPIO_MODE_PP 0b01
+
 bool i2c_spi_write(uint8_t ss, uint8_t *data, unsigned len);
 bool i2c_spi_read(uint8_t ss, uint8_t *data, unsigned len);
