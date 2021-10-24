@@ -1,7 +1,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+// see SC18IS602B I2C-SPI bridge datasheet
+
 #define I2C_ADDR 0x28
+
 #define GPIO_WRITE 0xf4
 #define GPIO_READ 0xf5
 #define GPIO_ENABLE 0xf6

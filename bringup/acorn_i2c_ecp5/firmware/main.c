@@ -9,8 +9,13 @@
 #include "i2c_spi.h"
 
 
-#define PIN_SPI_SS 0
-#define PIN_PROG_EN 1
+
+enum {
+    PIN_SPI_SS = 0,
+    PIN_PROG_EN,
+    PIN_PROGRAMN,
+    PIN_DONE
+};
 
 #define SPI_CMD_READ_ID 0x9f
 
@@ -33,7 +38,11 @@ int main(void)
     buf[0] = GPIO_MODE_PP << (PIN_PROG_EN * 2);
     assert(i2c_write(I2C_ADDR, GPIO_CONFIG, buf, 1));
 
+    // TODO: it's better to halt ECP5 here using PIN_PROGRAMN
+
     // enable programming
+    // connects SPI lines of the bridge to the flash memory
+    // (see schematics)
     buf[0] = 1 << PIN_PROG_EN;
     assert(i2c_write(I2C_ADDR, GPIO_WRITE, buf, 1));
 
@@ -48,6 +57,8 @@ int main(void)
     // disable programming
     buf[0] = 0;
     assert(i2c_write(I2C_ADDR, GPIO_WRITE, buf, 1));
+
+    // TODO: check PIN_DONE
 
     while(1) {}
 

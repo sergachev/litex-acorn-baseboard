@@ -1,6 +1,7 @@
 #include <i2c.h>
 #include "i2c_spi.h"
 
+
 #define MAX_BUFFER 200
 
 
@@ -25,6 +26,7 @@ bool i2c_spi_write(uint8_t ss, uint8_t *data, unsigned len)
 bool i2c_spi_read(uint8_t ss, uint8_t *data, unsigned len)
 {
     // a timeout is required because the chip will only start replying on i2c after spi transaction
+    // TODO: timeout value is now arbitrary
     for (unsigned timeout = 100; timeout > 0; timeout --)
         if (i2c_read(I2C_ADDR, ss, data, len, true))
             return true;
