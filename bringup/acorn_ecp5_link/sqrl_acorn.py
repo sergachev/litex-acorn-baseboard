@@ -44,6 +44,16 @@ _transceiver_io = [
         Subsignal("p", Pins("D5")),
         Subsignal("n", Pins("C5"))
     ),
+
+    # ECP5
+    ("ecp5_tx", 0,
+     Subsignal("p", Pins("B4")),
+     Subsignal("n", Pins("A4"))
+     ),
+    ("ecp5_rx", 0,
+     Subsignal("p", Pins("B8")),
+     Subsignal("n", Pins("A8"))
+     ),
 ]
 
 # CRG ----------------------------------------------------------------------------------------------
@@ -65,8 +75,8 @@ class CRG(Module):
 # GTPTestSoC ---------------------------------------------------------------------------------------
 
 class GTPTestSoC(SoCMini):
-    def __init__(self, platform, connector="pcie", linerate=2.5e9):
-        assert connector in ["sfp", "pcie"]
+    def __init__(self, platform, connector="ecp5", linerate=2.5e9):
+        assert connector in ["sfp", "pcie", "ecp5"]
         sys_clk_freq = int(100e6)
 
         # SoCMini ----------------------------------------------------------------------------------
@@ -142,7 +152,7 @@ def main():
     parser = argparse.ArgumentParser(description="LiteICLink transceiver example on Acorn CLE 215+")
     parser.add_argument("--build",     action="store_true", help="Build bitstream")
     parser.add_argument("--load",      action="store_true", help="Load bitstream (to SRAM)")
-    parser.add_argument("--connector", default="sfp",       help="Connector: sfp (default)")
+    parser.add_argument("--connector", default="ecp5",       help="Connector")
     parser.add_argument("--linerate",  default="2.5e9",     help="Linerate (default: 2.5e9)")
     args = parser.parse_args()
 
