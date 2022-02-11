@@ -10,3 +10,6 @@
 [submodule "litex-boards"]
 	path = litex-boards
 	url = https://github.com/litex-hub/litex-boards.git
+[submodule "liteiclink"]
+	path = liteiclink
+	url = https://github.com/enjoy-digital/liteiclink.git
