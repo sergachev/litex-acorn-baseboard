@@ -74,7 +74,7 @@ class GTPTestSoC(SoCMini):
             ident         = "LiteICLink bench on Acorn CLE 215+",
             ident_version = True,
             with_uart     = True,
-            uart_name     = "bridge"
+            uart_name     = "uartbone"
         )
 
         # CRG --------------------------------------------------------------------------------------
