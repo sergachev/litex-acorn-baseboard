@@ -71,7 +71,7 @@ class GTPTestSoC(SoCMini):
 
         # SoCMini ----------------------------------------------------------------------------------
         SoCMini.__init__(self, platform, sys_clk_freq,
-            ident         = "LiteSATA bench on Acorn CLE 215+",
+            ident         = "LiteICLink bench on Acorn CLE 215+",
             ident_version = True,
             with_uart     = True,
             uart_name     = "bridge"
