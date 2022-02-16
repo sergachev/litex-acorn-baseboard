@@ -70,12 +70,12 @@ class CRG(Module):
         self.submodules.pll = pll = S7PLL()
         self.comb += pll.reset.eq(self.rst)
         pll.register_clkin(clk200, 200e6)
-        pll.create_clkout(self.cd_sys,       sys_clk_freq)
+        pll.create_clkout(self.cd_sys, sys_clk_freq)
 
 # GTPTestSoC ---------------------------------------------------------------------------------------
 
 class GTPTestSoC(SoCMini):
-    def __init__(self, platform, connector="ecp5", linerate=2.5e9):
+    def __init__(self, platform, connector, linerate):
         assert connector in ["sfp", "pcie", "ecp5"]
         sys_clk_freq = int(100e6)
 
@@ -92,12 +92,12 @@ class GTPTestSoC(SoCMini):
 
         # GTP RefClk -------------------------------------------------------------------------------
         self.clock_domains.cd_refclk = ClockDomain()
-        self.crg.pll.create_clkout(self.cd_refclk, 125e6)
+        refclk_freq = 200e6
+        self.crg.pll.create_clkout(self.cd_refclk, refclk_freq)
         platform.add_platform_command("set_property SEVERITY {{Warning}} [get_drc_checks REQP-49]")
 
-
         # GTP PLL ----------------------------------------------------------------------------------
-        pll = GTPQuadPLL(self.cd_refclk.clk, 125e6, linerate)
+        pll = GTPQuadPLL(self.cd_refclk.clk, refclk_freq, linerate)
         print(pll)
         self.submodules += pll
 
@@ -107,6 +107,8 @@ class GTPTestSoC(SoCMini):
         self.submodules.serdes0 = serdes0 = GTP(pll, tx_pads, rx_pads, sys_clk_freq,
             tx_buffer_enable = True,
             rx_buffer_enable = True,
+            tx_polarity      = 1,
+            rx_polarity      = 1,
             clock_aligner    = False)
         serdes0.add_stream_endpoints()
         serdes0.add_controls()
@@ -152,8 +154,8 @@ def main():
     parser = argparse.ArgumentParser(description="LiteICLink transceiver example on Acorn CLE 215+")
     parser.add_argument("--build",     action="store_true", help="Build bitstream")
     parser.add_argument("--load",      action="store_true", help="Load bitstream (to SRAM)")
-    parser.add_argument("--connector", default="ecp5",       help="Connector")
-    parser.add_argument("--linerate",  default="2.5e9",     help="Linerate (default: 2.5e9)")
+    parser.add_argument("--connector", default="ecp5",      help="Connector")
+    parser.add_argument("--linerate",  default="800e6",     help="Line rate")
     args = parser.parse_args()
 
     platform = sqrl_acorn.Platform()
