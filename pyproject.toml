@@ -10,6 +10,7 @@ migen = "*"
 litex = {path = "litex", develop=true}
 litedram = {path = "litedram", develop=true}
 litepcie = {path = "litepcie", develop=true}
+liteeth = {path = "liteeth", develop=true}
 liteiclink = {path = "liteiclink", develop=true}
 litex-boards = {path = "litex-boards", develop=true}
 pythondata-cpu-vexriscv = "*"

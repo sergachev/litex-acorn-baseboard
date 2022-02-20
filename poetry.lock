@@ -8,7 +8,7 @@ python-versions = "*"
 
 [[package]]
 name = "charset-normalizer"
-version = "2.0.11"
+version = "2.0.12"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
 category = "main"
 optional = false
@@ -48,6 +48,19 @@ pyyaml = "*"
 [package.source]
 type = "directory"
 url = "litedram"
+
+[[package]]
+name = "liteeth"
+version = "0.0.0"
+description = "Small footprint and configurable Ethernet core"
+category = "main"
+optional = false
+python-versions = "~=3.6"
+develop = true
+
+[package.source]
+type = "directory"
+url = "liteeth"
 
 [[package]]
 name = "liteiclink"
@@ -134,7 +147,7 @@ cp2110 = ["hidapi"]
 
 [[package]]
 name = "pythondata-cpu-vexriscv"
-version = "1.0.1.post389"
+version = "1.0.1.post391"
 description = "Python module containing verilog files for VexRISCV cpu."
 category = "main"
 optional = false
@@ -190,7 +203,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "ff2433db2cd6147dbeef0313fe79e87832fb4d1b866db1422b6cacfb1724668a"
+content-hash = "a7e32a792a5eec7522d72fb778200528c7239dbb74a2032f71166bc85891c1ab"
 
 [metadata.files]
 certifi = [
@@ -198,8 +211,8 @@ certifi = [
     {file = "certifi-2021.10.8.tar.gz", hash = "sha256:78884e7c1d4b00ce3cea67b44566851c4343c120abd683433ce934a68ea58872"},
 ]
 charset-normalizer = [
-    {file = "charset-normalizer-2.0.11.tar.gz", hash = "sha256:98398a9d69ee80548c762ba991a4728bfc3836768ed226b3945908d1a688371c"},
-    {file = "charset_normalizer-2.0.11-py3-none-any.whl", hash = "sha256:2842d8f5e82a1f6aa437380934d5e1cd4fcf2003b06fed6940769c164a480a45"},
+    {file = "charset-normalizer-2.0.12.tar.gz", hash = "sha256:2857e29ff0d34db842cd7ca3230549d1a697f96ee6d3fb071cfa6c7393832597"},
+    {file = "charset_normalizer-2.0.12-py3-none-any.whl", hash = "sha256:6881edbebdb17b39b4eaaa821b438bf6eddffb4468cf344f09f89def34a8b1df"},
 ]
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
@@ -210,6 +223,7 @@ idna = [
     {file = "idna-3.3.tar.gz", hash = "sha256:9d643ff0a55b762d5cdb124b8eaa99c66322e2157b69160bc32796e824360e6d"},
 ]
 litedram = []
+liteeth = []
 liteiclink = []
 litepcie = []
 litex = []
@@ -222,8 +236,8 @@ pyserial = [
     {file = "pyserial-3.5.tar.gz", hash = "sha256:3c77e014170dfffbd816e6ffc205e9842efb10be9f58ec16d3e8675b4925cddb"},
 ]
 pythondata-cpu-vexriscv = [
-    {file = "pythondata-cpu-vexriscv-1.0.1.post389.tar.gz", hash = "sha256:c1c476dfbd311ec704ca011ce9b4385bf0bdd99d61db3126cf047147650ec3c7"},
-    {file = "pythondata_cpu_vexriscv-1.0.1.post389-py3-none-any.whl", hash = "sha256:a6476b1a5063716c949c1064a587e7edcc6854e12c8f3c048b52b7e888b5acee"},
+    {file = "pythondata-cpu-vexriscv-1.0.1.post391.tar.gz", hash = "sha256:083016fa23d590bd0b04f4f76af2de807e837715416f9e2cc03d3433ece1fbed"},
+    {file = "pythondata_cpu_vexriscv-1.0.1.post391-py3-none-any.whl", hash = "sha256:5f31a7f851a83c405bdf1c2aafc6e91abcc9e505a88b5f8801dc72962621d544"},
 ]
 pythondata-software-compiler-rt = [
     {file = "pythondata-software-compiler_rt-0.0.post6206.tar.gz", hash = "sha256:8923634c4fcfd75b58ea134668ae98649d7272908723c34a5836037e939c99ae"},
