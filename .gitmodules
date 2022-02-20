@@ -13,3 +13,6 @@
 [submodule "liteiclink"]
 	path = liteiclink
 	url = https://github.com/enjoy-digital/liteiclink.git
+[submodule "liteeth"]
+	path = liteeth
+	url = https://github.com/enjoy-digital/liteeth/
