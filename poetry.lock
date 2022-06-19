@@ -92,6 +92,32 @@ type = "directory"
 url = "litepcie"
 
 [[package]]
+name = "litesata"
+version = "0.0.0"
+description = "Small footprint and configurable SATA core"
+category = "main"
+optional = false
+python-versions = "~=3.6"
+develop = true
+
+[package.source]
+type = "directory"
+url = "litesata"
+
+[[package]]
+name = "litescope"
+version = "0.0.0"
+description = "Small footprint and configurable embedded FPGA logic analyzer core"
+category = "main"
+optional = false
+python-versions = "~=3.6"
+develop = true
+
+[package.source]
+type = "directory"
+url = "litescope"
+
+[[package]]
 name = "litex"
 version = "0.0.0"
 description = "Python SoC/Core builder for building FPGA based systems."
@@ -209,7 +235,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "9490dfb511416fa8238dcd43f14c348780b14c530f5f8211d940cb98162152de"
+content-hash = "1d018395091be8103639623fffb9a91275f2b680983dce4229ce5b4ff0ad3781"
 
 [metadata.files]
 certifi = [
@@ -232,6 +258,8 @@ litedram = []
 liteeth = []
 liteiclink = []
 litepcie = []
+litesata = []
+litescope = []
 litex = []
 litex-boards = []
 migen = [

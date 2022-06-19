@@ -16,3 +16,9 @@
 [submodule "liteeth"]
 	path = liteeth
 	url = https://github.com/enjoy-digital/liteeth/
+[submodule "litesata"]
+	path = litesata
+	url = https://github.com/enjoy-digital/litesata.git
+[submodule "litescope"]
+	path = litescope
+	url = https://github.com/enjoy-digital/litescope.git

@@ -12,6 +12,8 @@ litedram = {path = "litedram", develop=true}
 litepcie = {path = "litepcie", develop=true}
 liteeth = {path = "liteeth", develop=true}
 liteiclink = {path = "liteiclink", develop=true}
+litesata = {path = "litesata", develop=true}
+litescope = {path = "litescope", develop=true}
 litex-boards = {path = "litex-boards", develop=true}
 pythondata-cpu-vexriscv = "*"
 pythondata-software-picolibc = "*"
