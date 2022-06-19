@@ -7,7 +7,7 @@ from litex.soc.integration.soc_core import SoCCore, soc_core_argdict, soc_core_a
 from litex.soc.integration.builder import Builder, builder_argdict, builder_args
 from litex.soc.cores.bitbang import I2CMaster
 from litex.soc.cores.led import LedChaser
-from litex.soc.cores.cpu import VexRiscv
+from litex.soc.cores.cpu.vexriscv import VexRiscv
 
 
 _i2c_io = [
@@ -20,9 +20,9 @@ _i2c_io = [
 
 
 class I2CTestSoC(SoCCore):
-    def __init__(self, platform, cpu, **kwargs):
+    def __init__(self, platform, **kwargs):
         sys_clk_freq = int(50e6)
-        SoCCore.__init__(self, platform, cpu_type=cpu.name, clk_freq=sys_clk_freq, **kwargs)
+        SoCCore.__init__(self, platform, clk_freq=sys_clk_freq, **kwargs)
         self.submodules.crg = _CRG(platform, sys_clk_freq)
         self.add_constant("ROM_BOOT_ADDRESS", self.mem_map['main_ram'])
         self.submodules.i2c = I2CMaster(platform.request("i2c"))
@@ -41,6 +41,7 @@ def main():
     builder_kwargs = builder_argdict(args)
 
     cpu = VexRiscv
+    soc_kwargs['cpu_type'] = cpu.name
     soc_kwargs['integrated_sram_size'] = 16 * 1024
     soc_kwargs["integrated_main_ram_size"] = 16 * 1024
 
@@ -53,7 +54,7 @@ def main():
 
     platform = sqrl_acorn.Platform()
     platform.add_extension(_i2c_io)
-    soc = I2CTestSoC(platform, cpu=cpu, **soc_kwargs)
+    soc = I2CTestSoC(platform, **soc_kwargs)
     builder = Builder(soc, **builder_kwargs)
     builder.add_software_package('firmware', src_dir=os.path.join(os.getcwd(), 'firmware'))
     builder.build(run=args.build_gateware)
