@@ -123,7 +123,7 @@ class Platform(XilinxPlatform):
 
         self.toolchain.bitstream_commands = [
             "set_property BITSTREAM.CONFIG.SPI_BUSWIDTH 4 [current_design]",
-            "set_property BITSTREAM.CONFIG.CONFIGRATE 16 [current_design]",
+            "set_property BITSTREAM.CONFIG.CONFIGRATE 40 [current_design]",
             "set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]"
         ]
         self.toolchain.additional_commands = \
