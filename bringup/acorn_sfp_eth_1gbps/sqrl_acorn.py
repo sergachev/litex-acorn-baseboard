@@ -45,7 +45,9 @@ class CRG(Module):
 # BaseSoC -----------------------------------------------------------------------------------------
 
 class BaseSoC(SoCMini):
-    def __init__(self, variant="cle-215+", sys_clk_freq=int(125e6), with_led_chaser=True, **kwargs):
+    def __init__(self, variant="cle-215+", connector=0,
+                 sys_clk_freq=int(125e6), with_led_chaser=True, **kwargs):
+        assert connector in [0, 1]
         platform = sqrl_acorn.Platform(variant=variant)
 
         # SoCCore ----------------------------------------------------------------------------------
@@ -58,11 +60,17 @@ class BaseSoC(SoCMini):
 
         _eth_io = [
             ("sfp", 0,
-                Subsignal("txp", Pins("D7")),
-                Subsignal("txn", Pins("C7")),
-                Subsignal("rxp", Pins("D9")),
-                Subsignal("rxn", Pins("C9")),
+                Subsignal("txp", Pins("D5")),
+                Subsignal("txn", Pins("C5")),
+                Subsignal("rxp", Pins("D11")),
+                Subsignal("rxn", Pins("C11")),
             ),
+            ("sfp", 1,
+                Subsignal("txp", Pins("B4")),
+                Subsignal("txn", Pins("A4")),
+                Subsignal("rxp", Pins("B8")),
+                Subsignal("rxn", Pins("A8")),
+             ),
         ]
         platform.add_extension(_eth_io)
 
@@ -77,7 +85,7 @@ class BaseSoC(SoCMini):
         self.submodules += qpll
         self.submodules.ethphy = A7_1000BASEX(
             qpll_channel = qpll.channels[0],
-            data_pads    = self.platform.request("sfp"),
+            data_pads    = self.platform.request("sfp", connector),
             sys_clk_freq = self.clk_freq,
             rx_polarity  = 1,  # inverted on acorn
             tx_polarity  = 0   # inverted on acorn and on base board
@@ -99,12 +107,14 @@ def main():
     parser.add_argument("--load",            action="store_true", help="Load bitstream")
     parser.add_argument("--flash",           action="store_true", help="Flash bitstream")
     parser.add_argument("--variant",         default="cle-215+",  help="Board variant: cle-215+, cle-215 or cle-101")
+    parser.add_argument("--connector",       default="0",         help="SFP connector (0 or 1)")
     parser.add_argument("--sys-clk-freq",    default=125e6,       help="System clock frequency")
     builder_args(parser)
     args = parser.parse_args()
 
     soc = BaseSoC(
         variant      = args.variant,
+        connector    = int(args.connector),
         sys_clk_freq = int(float(args.sys_clk_freq)),
     )
 
