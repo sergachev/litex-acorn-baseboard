@@ -11,8 +11,8 @@ import argparse
 
 from migen import *
 
-from litex_boards.platforms import acorn
-from litex_boards.targets.acorn import CRG as _CRG
+from litex_boards.platforms import sqrl_acorn
+from litex_boards.targets.sqrl_acorn import CRG as _CRG
 
 from litex.build.generic_platform import *
 
@@ -30,8 +30,7 @@ from litescope import LiteScopeAnalyzer
 # IOs ----------------------------------------------------------------------------------------------
 
 _sata_io = [
-    # PCIe 2 SATA Custom Adapter (With PCIe Riser / SATA cable mod).
-    ("pcie2sata", 0,
+    ("sata", 0,
         Subsignal("tx_p",  Pins("B6")),
         Subsignal("tx_n",  Pins("A6")),
         Subsignal("rx_p",  Pins("B10")),
@@ -68,7 +67,7 @@ class SATATestSoC(SoCMini):
         # PHY
         self.submodules.sata_phy = LiteSATAPHY(platform.device,
             refclk     = self.cd_sata_refclk.clk,
-            pads       = platform.request("pcie2sata"),
+            pads       = platform.request("sata"),
             gen        = gen,
             clk_freq   = sys_clk_freq,
             data_width = 16)
@@ -142,7 +141,7 @@ def main():
     parser.add_argument("--with-analyzer", action="store_true", help="Add LiteScope Analyzer")
     args = parser.parse_args()
 
-    platform = acorn.Platform()
+    platform = sqrl_acorn.Platform()
     platform.add_extension(_sata_io)
     soc = SATATestSoC(platform, "gen" + args.gen, with_analyzer=args.with_analyzer)
     builder = Builder(soc, csr_csv="csr.csv")

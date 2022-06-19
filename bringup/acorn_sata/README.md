@@ -7,8 +7,9 @@
 
 [> Build
 --------
+```
 python3 acorn.py --gen=1 --with-analyzer --build --load
-python3 -m litex_boards.targets.litex_acorn_baseboard --cpu-type=None --build --load
+```
 
 [> Check
 --------
