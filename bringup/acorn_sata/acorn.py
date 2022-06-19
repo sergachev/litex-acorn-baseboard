@@ -72,6 +72,8 @@ class SATATestSoC(SoCMini):
             clk_freq   = sys_clk_freq,
             data_width = 16)
         self.add_csr("sata_phy")
+        self.sata_phy.phy.rx_polarity.reset = 1  # inverted on acorn
+        self.sata_phy.phy.tx_polarity.reset = 1  # inverted on acorn
 
         # Core
         self.submodules.sata_core = LiteSATACore(self.sata_phy)
