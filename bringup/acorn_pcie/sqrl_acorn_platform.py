@@ -46,10 +46,10 @@ _io = [
         Subsignal("rst_n", Pins("J1"), IOStandard("LVCMOS33"), Misc("PULLUP=TRUE")),
         Subsignal("clk_p", Pins("F6")),
         Subsignal("clk_n", Pins("E6")),
-        Subsignal("rx_p",  Pins("D11")),
-        Subsignal("rx_n",  Pins("C11")),
-        Subsignal("tx_p",  Pins("D5")),
-        Subsignal("tx_n",  Pins("C5")),
+        Subsignal("rx_p",  Pins("D9")),
+        Subsignal("rx_n",  Pins("C9")),
+        Subsignal("tx_p",  Pins("D7")),
+        Subsignal("tx_n",  Pins("C7")),
     ),
 
     # DDR3 SDRAM.
